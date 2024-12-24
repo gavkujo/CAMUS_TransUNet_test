@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from dataset_camus import CAMUSDataset, RandomGenerator
-from networks.vit_seg_modelling import VisionTransformer as ViT_seg
+from networks.vit_seg_modeling import VisionTransformer as ViT_seg
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 from trainer import train_one_epoch, evaluate
 
