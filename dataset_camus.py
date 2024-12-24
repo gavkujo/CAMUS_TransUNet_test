@@ -35,7 +35,8 @@ class RandomGenerator(object):
             label = zoom(label, (self.output_size[0] / x, self.output_size[1] / y), order=0)
 
         # Convert to PyTorch tensors
-        image = torch.from_numpy(image).float().unsqueeze(0)  # Add channel dimension
+        # image = torch.from_numpy(image).float().unsqueeze(0)  # Add channel dimension
+        image = torch.from_numpy(image.copy()).float().unsqueeze(0)  # Add channel dimension
         label = torch.from_numpy(label).long()
         return {'image': image, 'label': label}
 
