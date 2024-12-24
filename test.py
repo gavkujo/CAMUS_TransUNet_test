@@ -1,6 +1,6 @@
 import os
 import torch
-from dataset_loader import CAMUSDataset, RandomGenerator
+from dataset_camus import CAMUSDataset, RandomGenerator
 from networks.vit_seg_modelling import VisionTransformer as ViT_seg
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 from trainer import evaluate
