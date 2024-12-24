@@ -42,7 +42,8 @@ def main():
     #model = ViT_seg(img_size=224, num_classes=4, vit_name=vit_model_name)
 
     vit_path = f"../model/vit_checkpoint/imagenet21k/{vit_model_name}.npz"
-    model.load_from(weights=vit_path)
+    #model.load_from(weights=vit_path)
+    model.load_from(weights=np.load(config_vit.pretrained_path))
 
     # Training Setup
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
