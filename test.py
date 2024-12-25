@@ -40,6 +40,7 @@ def main():
     num_classes = 4
     img_size = 224
     vit_patches_size = 16
+    prediction_output_dir = "./predictions"
 
     # Load Test Dataset
     test_dataset = CAMUSDataset(data_dir, split="test", transform=RandomGenerator(output_size))
