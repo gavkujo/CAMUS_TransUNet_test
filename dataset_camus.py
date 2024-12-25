@@ -37,7 +37,8 @@ class RandomGenerator(object):
         # Convert to PyTorch tensors
         # image = torch.from_numpy(image).float().unsqueeze(0)  # Add channel dimension
         image = torch.from_numpy(image.copy()).float().unsqueeze(0)  # Add channel dimension
-        label = torch.from_numpy(label).long()
+        # label = torch.from_numpy(label).long()
+        label = torch.from_numpy(label.copy()).long()  # Ensure no negative strides
         return {'image': image, 'label': label}
 
 class CAMUSDataset(Dataset):
