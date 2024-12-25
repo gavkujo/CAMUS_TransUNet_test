@@ -78,7 +78,7 @@ def main():
                         output_dir=prediction_output_dir,
                         case_name=case_name,
                     )
-        print(f"Predictions saved in {prediction_output_dir}")
+    print(f"Predictions saved in {prediction_output_dir}")
 
 if __name__ == "__main__":
     main()
