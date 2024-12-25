@@ -60,6 +60,7 @@ class CAMUSDataset(Dataset):
     def __getitem__(self, idx):
         image_path = os.path.join(self.base_dir, self.images[idx])
         label_path = os.path.join(self.base_dir, self.labels[idx])
+        case_name = os.path.basename(image_path).split('.')[0]
 
         # Load images and labels
         image = np.load(image_path).astype(np.float32)
@@ -68,6 +69,7 @@ class CAMUSDataset(Dataset):
         sample = {'image': image, 'label': label}
         if self.transform:
             sample = self.transform(sample)
+        sample["case_name"] = case_name
 
         return sample
 
