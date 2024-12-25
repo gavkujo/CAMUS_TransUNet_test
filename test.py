@@ -5,7 +5,7 @@ from dataset_camus import CAMUSDataset, RandomGenerator
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 from trainer import evaluate
-
+import matplotlib.pyplot as plt
 
 def save_prediction(image, label, prediction, output_dir, case_name):
     """Save the input image, ground truth, and predicted segmentation."""
