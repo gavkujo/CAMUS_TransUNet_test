@@ -68,6 +68,8 @@ def main():
                 images, labels = batch['image'].to(device), batch['label'].to(device)
                 outputs = model(images)
                 predictions = torch.argmax(outputs, dim=1).cpu().numpy()
+
+                case_names = batch.get('case_name', ["unknown_case"] * len(predictions))  # Fallback for missing case_name
     
                 for i in range(len(predictions)):
                     case_name = batch['case_name'][i]
