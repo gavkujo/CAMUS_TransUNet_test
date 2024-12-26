@@ -11,12 +11,12 @@ def save_prediction(image, label, prediction, output_dir, case_name):
     """Save the input image, ground truth, and predicted segmentation."""
     os.makedirs(output_dir, exist_ok=True)
 
-    # Save as .npy for numerical data
+    # Save as .npy
     np.save(os.path.join(output_dir, f"{case_name}_image.npy"), image)
     np.save(os.path.join(output_dir, f"{case_name}_label.npy"), label)
     np.save(os.path.join(output_dir, f"{case_name}_prediction.npy"), prediction)
 
-    # Optionally save as visualizations (e.g., .png)
+    # Save visualizations
     plt.figure(figsize=(12, 4))
     plt.subplot(1, 3, 1)
     plt.title("Image")
@@ -32,22 +32,20 @@ def save_prediction(image, label, prediction, output_dir, case_name):
 
 def main():
     # Configurations
-    model_path = "./output/best_model.pth"  # Update to the correct model path
-    vit_model_name = "R50-ViT-B_16"  # Example
+    model_path = "./output/best_model.pth" 
+    vit_model_name = "R50-ViT-B_16" 
     output_size = (224, 224)
     batch_size = 16
-    data_dir = "preprocessed_data"  # Update this path
+    data_dir = "preprocessed_data" 
     num_epochs = 100
     num_classes = 4
     img_size = 224
     vit_patches_size = 16
     prediction_output_dir = "./predictions"
 
-    # Load Test Dataset
     test_dataset = CAMUSDataset(data_dir, split="test", transform=RandomGenerator(output_size))
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
-    # Load Model
     config_vit = CONFIGS_ViT_seg[vit_model_name]
     config_vit.n_classes = num_classes
     if vit_model_name.find('R50') != -1:
