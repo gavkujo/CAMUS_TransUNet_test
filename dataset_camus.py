@@ -73,7 +73,6 @@ class CAMUSDataset(Dataset):
 
         return sample
 
-# Example usage
 if __name__ == "__main__":
     base_dir = "preprocessed_data"
     output_size = (224, 224)
