@@ -8,7 +8,7 @@ from pathlib import Path
 INPUT_DIR = "database_nifti"
 SPLIT_DIR = "database_split"
 OUTPUT_DIR = "preprocessed_data"
-TARGET_SIZE = (224, 224)  # Resize dimensions
+TARGET_SIZE = (224, 224)
 
 def load_nii(file_path):
     """Load NIfTI file and return the image data."""
@@ -17,7 +17,7 @@ def load_nii(file_path):
 def resize_image(image, target_size):
     """Resize a 3D image to the target size."""
     factors = [t / s for t, s in zip(target_size, image.shape[:2])]
-    resized_image = zoom(image, factors, order=1)  # Linear interpolation
+    resized_image = zoom(image, factors, order=1)
     return resized_image
 
 def normalize_image(image):
@@ -38,7 +38,6 @@ def process_and_save(patient_id, split, output_dir):
                 gt_path = patient_dir / f"{patient_id}_{view}_{phase}_gt.nii.gz"
 
                 if image_path.exists() and gt_path.exists():
-                    # Load and preprocess images
                     image = load_nii(image_path)
                     gt = load_nii(gt_path)
 
