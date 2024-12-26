@@ -11,9 +11,9 @@ from trainer import train_one_epoch, evaluate
 
 def main():
     # Configurations
-    data_dir = "preprocessed_data"  # Update this path
+    data_dir = "preprocessed_data"  
     output_dir = "./output"
-    vit_model_name = "R50-ViT-B_16"  # Example pre-trained ViT model
+    vit_model_name = "R50-ViT-B_16" 
     output_size = (224, 224)
     num_epochs = 100
     num_classes = 4
@@ -22,10 +22,8 @@ def main():
     img_size = 224
     vit_patches_size = 16
 
-    # Create output directory
     os.makedirs(output_dir, exist_ok=True)
 
-    # Prepare Dataset
     train_dataset = CAMUSDataset(data_dir, split="train", transform=RandomGenerator(output_size))
     val_dataset = CAMUSDataset(data_dir, split="val", transform=RandomGenerator(output_size))
 
@@ -46,32 +44,27 @@ def main():
     #model.load_from(weights=vit_path)
     model.load_from(weights=np.load(config_vit.pretrained_path))
 
-    # Training Setup
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    # Training Loop
+    # Training
     best_val_dice = 0.0
     for epoch in range(num_epochs):
         print(f"\nEpoch {epoch + 1}/{num_epochs}")
 
-        # Train
         train_loss = train_one_epoch(model, train_loader, criterion, optimizer, device)
         print(f"Train Loss: {train_loss:.4f}")
 
-        # Validate
         val_loss, val_dice, val_iou, val_hausdorff_95 = evaluate(model, val_loader, criterion, device)
         print(f"Validation Loss: {val_loss:.4f}, DICE: {val_dice:.4f}, IoU: {val_iou:.4f}, Hausdorff95: {val_hausdorff_95:.4f}")
 
-        # Save the best model
         if val_dice > best_val_dice:
             best_val_dice = val_dice
             torch.save(model.state_dict(), os.path.join(output_dir, "best_model.pth"))
             print("Saved best model!")
 
-        # Save model at regular intervals
         if (epoch + 1) % 10 == 0:
             model_path = os.path.join(output_dir, f"model_epoch_{epoch + 1}.pth")
             torch.save(model.state_dict(), model_path)
